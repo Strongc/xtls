@@ -1,2 +1,2 @@
-# xtls
-tools of python, x for xlzd
+xtls：Some awesome tools just for `xlzd <http://xlzd.me>`_
+===============================
