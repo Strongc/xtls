@@ -42,8 +42,6 @@ setup(
     extras_require={},
     packages=PACKAGES,
     classifiers=[
-        'Environment :: Web Environment',
-        'Intended Audience :: Developers',
         'License :: GPLv2 License',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2',
