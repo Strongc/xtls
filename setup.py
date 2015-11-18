@@ -1,9 +1,6 @@
 #!/usr/bin/env python
 # encoding=utf-8
 
-
-import re
-
 try:
     from setuptools import setup
 except ImportError:
@@ -12,20 +9,14 @@ except ImportError:
 __author__ = 'xlzd'
 
 
-def read_version():
-    with open('xtls/__init__.py', 'r') as v_file:
-        version = re.findall(ur'__version__ = (.+)', v_file.read())[0].decode('utf-8')
-        if not version:
-            raise RuntimeError("Find version information failed.")
-        return version
+with open('VERSION', 'r') as v_file:
+    VERSION = v_file.read()
 
 
 with open('README.rst', 'rb') as f_readme:
     README = f_readme.read().decode('utf-8')
 
 PACKAGES = ['xtls']
-
-VERSION = read_version()
 
 setup(
     name='xtls',
@@ -42,7 +33,7 @@ setup(
     extras_require={},
     packages=PACKAGES,
     classifiers=[
-        'License :: GPLv2 License',
+        # 'License :: GPLv2 License',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 2',
         'Topic :: Internet :: WWW/HTTP',
