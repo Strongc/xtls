@@ -2,8 +2,6 @@
 # -*- coding:utf-8 -*-
 import sys
 
-from cassandra.cluster import Cluster
-
 from codehelper import singleton
 
 reload(sys)
@@ -15,6 +13,7 @@ _DEFAULT_CONTACT_POINTS = ['127.0.0.1']
 @singleton
 class CassandraProxy(object):
     def __init__(self, contact_points=_DEFAULT_CONTACT_POINTS, port=9042):
+        from cassandra.cluster import Cluster
         self._cluster = Cluster(contact_points, port)
         self._sessions = {}
 
