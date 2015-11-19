@@ -17,10 +17,6 @@ with open(os.path.join(BASE_DIR, 'README.rst'), 'rb') as f_readme:
     README = f_readme.read()
 
 PACKAGES = ['xtls']
-REQUIRES = [
-    'requests',
-    'beautifulsoup4'
-]
 
 setup(
     name=about['__name__'],
@@ -33,7 +29,7 @@ setup(
     license=about['__license__'],
     url=about['__url__'],
     download_url=about['__download_url__'],
-    install_requires=REQUIRES,
+    install_requires=about['__requires__'],
     extras_require={},
     packages=PACKAGES,
     classifiers=[]
