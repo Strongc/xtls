@@ -16,9 +16,19 @@ __packages__ = [
     'timeparser',
     'util',
     'logger',
+    'activemqwraps',
+    'errors',
+    'cassandrautil',
 ]
 
-__version__ = '0.0.7'
+__requires__ = [
+    'requests',
+    'beautifulsoup4',
+    'stompest',
+    'cassandra',
+]
+
+__version__ = '0.0.8'
 
 __name__ = 'xtls'
 __summary__ = 'xtls: tools just for xlzd'
