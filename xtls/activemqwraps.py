@@ -98,7 +98,7 @@ def producer(cfg_uri, queue, logger=None):
             for item in function(*args, **kwargs):
                 try:
                     item = repr(item)
-                    client.send(queue, item)
+                    client.send(queue, item, headers={'persistent': 'true'})
                     _info('Producer %s - %s' % (queue, item))
                 except ProducerFatalError, e:
                     _exception(e)
