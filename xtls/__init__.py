@@ -5,10 +5,16 @@
 init
 """
 
-__author__ = 'xlzd'
-__version__ = '0.0.1'
-
-__all__ = []
+from xtls.__about__ import (
+    __author__,
+    __copyright__,
+    __email__,
+    __license__,
+    __summary__,
+    __name__,
+    __url__,
+    __version__
+)
 
 
 def main():

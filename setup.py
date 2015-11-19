@@ -1,42 +1,36 @@
 #!/usr/bin/env python
 # encoding=utf-8
 
+import os
 try:
     from setuptools import setup
 except ImportError:
     from distutils.core import setup
 
-__author__ = 'xlzd'
+BASE_DIR = os.path.dirname(__file__)
 
+about = {}
+with open(os.path.join(BASE_DIR, 'xtls', '__about__.py')) as f:
+    exec(f.read(), about)
 
-with open('VERSION', 'r') as v_file:
-    VERSION = v_file.read()
-
-
-with open('README.rst', 'rb') as f_readme:
-    README = f_readme.read().decode('utf-8')
+with open(os.path.join(BASE_DIR, 'README.rst'), 'rb') as f_readme:
+    README = f_readme.read()
 
 PACKAGES = ['xtls']
 
 setup(
-    name='xtls',
-    version=VERSION,
+    name=about['__name__'],
+    version=about['__version__'],
     keywords=['xlzd', 'python', 'python tools'],
-    description=u'xtls: tools just for xlzd',
+    description=about['__summary__'],
     long_description=README,
-    author='xlzd',
-    author_email='i@xlzd.me',
-    license='GPLv2',
-    url='https://github.com/xlzd/xtls',
-    download_url='https://github.com/xlzd/xtls',
+    author=about['__author__'],
+    author_email=about['__email__'],
+    license=about['__license__'],
+    url=about['__url__'],
+    download_url=about['__download_url__'],
     install_requires=[],
     extras_require={},
     packages=PACKAGES,
-    classifiers=[
-        # 'License :: GPLv2 License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python :: 2',
-        'Topic :: Internet :: WWW/HTTP',
-        'Topic :: Software Development :: Libraries :: Python Modules'
-    ]
+    classifiers=[]
 )

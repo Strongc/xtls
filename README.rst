@@ -1,2 +1,4 @@
-xtls：Some awesome tools just for `xlzd <http://xlzd.me>`_
+xtls
 ===============================
+
+xtls is a toolkit for `xlzd <http://xlzd.me>`_
