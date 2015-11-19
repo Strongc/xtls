@@ -10,7 +10,15 @@ __all__ = [
     '__copyright__',
 ]
 
-__version__ = '0.0.4'
+__packages__ = [
+    'basecrawler',
+    'codehelper',
+    'timeparser',
+    'util',
+    'logger',
+]
+
+__version__ = '0.0.7'
 
 __name__ = 'xtls'
 __summary__ = 'xtls: tools just for xlzd'

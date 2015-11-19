@@ -14,20 +14,7 @@ from xtls.__about__ import (
     __name__,
     __url__,
     __version__,
+    __packages__
 )
 
-__all__ = [
-    'basecrawler',
-    'codehelper',
-    'timeparser',
-    'util',
-]
-
-
-def main():
-    print 'hello, world'
-
-
-if __name__ == '__main__':
-    main()
-
+__all__ = __packages__
