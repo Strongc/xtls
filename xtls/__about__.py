@@ -10,7 +10,7 @@ __all__ = [
     '__copyright__',
 ]
 
-__version__ = '0.0.3'
+__version__ = '0.0.4'
 
 __name__ = 'xtls'
 __summary__ = 'xtls: tools just for xlzd'
