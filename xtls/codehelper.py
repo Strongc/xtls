@@ -41,9 +41,9 @@ def timeit(argument):
             @wraps
             def wrapper(*args, **kwargs):
                 start_time = time.time()
-                argument.info('function [%s] start at [%s]' % (function.__name__, now(format='string')))
+                argument.info('function [%s] start at [%s]' % (function.__name__, now(obj=False, precise=True)))
                 rst = function(*args, **kwargs)
-                argument.info('function [%s] exit  at [%s]' % (function.__name__, now(format='string')))
+                argument.info('function [%s] exit  at [%s]' % (function.__name__, now(obj=False, precise=True)))
                 argument.info('function [%s] coast [%sms]' % (function.__name__, (time.time() - start_time)*1000))
                 return rst
             return wrapper
@@ -52,9 +52,9 @@ def timeit(argument):
         @wraps
         def wrapper(*args, **kwargs):
             start_time = time.time()
-            print 'function [%s] start at [%s]' % (argument.__name__, now(format='string'))
+            print 'function [%s] start at [%s]' % (argument.__name__, now(obj=False, precise=True))
             rst = argument(*args, **kwargs)
-            print 'function [%s] exit  at [%s]' % (argument.__name__, now(format='string'))
+            print 'function [%s] exit  at [%s]' % (argument.__name__, now(obj=False, precise=True))
             print 'function [%s] coast [%sms]' % (argument.__name__, (time.time() - start_time)*1000)
             return rst
         return wrapper
