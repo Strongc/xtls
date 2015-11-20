@@ -1,0 +1,47 @@
+.. _timeparser:
+
+时间解析相关
+===========
+
+.. _parse_time_str:
+
+解析时间字符串
+----------
+
+::
+
+    from xtls.timeparser import parse_time
+    
+    parse_time('现在是2012-10-02 02:01:01')  # 2012-10-02 02:01:01
+    parse_time('现在是2012-10-02')  # 2012-10-02 00:00:00
+    parse_time('现在是2012年12月12日9时21分31秒')  # 2012-12-12 09:21:31
+    parse_time('现在是二〇一五年十二月二十五日')  # 2015-12-25 00:00:00
+    parse_time('20120310')  # 2012-03-10 00:00:00
+    
+    
+
+.. _parse_time_exp:
+
+解析时间表达式
+----------
+
+::
+
+    from xtls.timeparser import parse_time
+    
+    parse_time('3天后')  # 距离此刻三天后
+    
+    # 支持的时间表达式：2年前，9天后，3个季度之后，23分钟前....
+    
+    
+
+
+.. _get_time:
+
+获取此刻时间
+----------
+
+``from xtls.timeparser import now``
+
+支持返回Utc时间或者本地时间，可指定返回时间对象或者字符串。
+

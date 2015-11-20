@@ -1,0 +1,262 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>代码检测及帮助 &mdash; xtls documentation 0.0.* 文档</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="xtls documentation 0.0.* 文档" href="index.html"/>
+        <link rel="next" title="日志工具" href="logger.html"/>
+        <link rel="prev" title="时间解析相关" href="timeparser.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> xtls documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.*
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">概览</a></li>
+<li class="toctree-l1"><a class="reference internal" href="timeparser.html">时间解析相关</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">代码检测及帮助</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#timeit">测试函数运行时长</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#no-exception">控制函数不抛出异常</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#runtime">获取程序运行环境相关</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#singleton">单例装饰器</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">日志工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">基础帮助方法</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">xtls documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>代码检测及帮助</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/codehelper.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="codehelper">
+<span id="id1"></span><h1>代码检测及帮助<a class="headerlink" href="#codehelper" title="永久链接至标题">¶</a></h1>
+<div class="section" id="timeit">
+<span id="id2"></span><h2>测试函数运行时长<a class="headerlink" href="#timeit" title="永久链接至标题">¶</a></h2>
+<p>检测一个函数的运行时间，支持使用logger记录到日志中</p>
+<div class="highlight-python"><div class="highlight"><pre>from xtls.codehelper import timeit
+
+@timeit  # or @timeit(logger)
+def func():
+    print &#39;hello&#39;
+
+&gt;&gt; output:
+function [func] start at [2015-11-03 15:04:49]
+function [func] exit  at [2015-11-03 15:04:49]
+function [func] coast [0.0350475311279ms]
+</pre></div>
+</div>
+</div>
+<div class="section" id="no-exception">
+<span id="id3"></span><h2>控制函数不抛出异常<a class="headerlink" href="#no-exception" title="永久链接至标题">¶</a></h2>
+<p>有时候不希望代码在某一句停下，但每句代码 try-catch 又很难看，可以使用 &#64;no_exception 控制函数在遇到异常时返回某默认值。</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xtls.codehelper</span> <span class="kn">import</span> <span class="n">no_exception</span>
+
+<span class="nd">@no_exceptiin</span><span class="p">(</span><span class="n">on_exception</span><span class="o">=</span><span class="s">&quot;return what when exception&quot;</span><span class="p">)</span>
+<span class="k">def</span> <span class="nf">func</span><span class="p">():</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="runtime">
+<span id="id4"></span><h2>获取程序运行环境相关<a class="headerlink" href="#runtime" title="永久链接至标题">¶</a></h2>
+<p>有时候程序会运行在本机/服务器/测试环境等等，如果配置邮件预警不容易知道来自哪个机器，可通过如下方法获取：</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xtls.codehelper</span> <span class="kn">import</span> <span class="n">get_user</span><span class="p">,</span> <span class="n">get_ip</span><span class="p">,</span> <span class="n">get_runner</span>
+
+<span class="n">get_user</span><span class="p">()</span>    <span class="c"># xlzd</span>
+<span class="n">get_ip</span><span class="p">()</span>      <span class="c"># 192.168.1.100</span>
+<span class="n">get_runner</span><span class="p">()</span>  <span class="c"># xlzd@192.168.1.100</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="singleton">
+<span id="id5"></span><h2>单例装饰器<a class="headerlink" href="#singleton" title="永久链接至标题">¶</a></h2>
+<p>装饰在类定义的地方，使某个类只能创建一个实例。</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xtls.codehelper</span> <span class="kn">import</span> <span class="n">singleton</span>
+
+<span class="nd">@singleton</span>
+<span class="k">class</span> <span class="nc">Demo</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+    <span class="k">pass</span>
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="logger.html" class="btn btn-neutral float-right" title="日志工具" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="timeparser.html" class="btn btn-neutral" title="时间解析相关" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; 版权所有 2015, xlzd.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.*',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/translations.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

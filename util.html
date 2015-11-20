@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>xtls: awesome tools by xlzd &mdash; xtls documentation 0.0.* 文档</title>
+  <title>基础帮助方法 &mdash; xtls documentation 0.0.* 文档</title>
   
 
   
@@ -30,8 +30,8 @@
   
 
   
-    <link rel="top" title="xtls documentation 0.0.* 文档" href="#"/>
-        <link rel="next" title="概览" href="overview.html"/> 
+    <link rel="top" title="xtls documentation 0.0.* 文档" href="index.html"/>
+        <link rel="prev" title="日志工具" href="logger.html"/> 
 
   
   <script src="_static/js/modernizr.min.js"></script>
@@ -49,7 +49,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> xtls documentation
+            <a href="index.html" class="icon icon-home"> xtls documentation
           
 
           
@@ -80,12 +80,17 @@
           
             
             
-                <ul>
+                <ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="overview.html">概览</a></li>
 <li class="toctree-l1"><a class="reference internal" href="timeparser.html">时间解析相关</a></li>
 <li class="toctree-l1"><a class="reference internal" href="codehelper.html">代码检测及帮助</a></li>
 <li class="toctree-l1"><a class="reference internal" href="logger.html">日志工具</a></li>
-<li class="toctree-l1"><a class="reference internal" href="util.html">基础帮助方法</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">基础帮助方法</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#beautifulsoup">BeautifulSoup</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#url">Url编码、解码</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#digest">数据摘要</a></li>
+</ul>
+</li>
 </ul>
 
             
@@ -99,7 +104,7 @@
       
       <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="#">xtls documentation</a>
+        <a href="index.html">xtls documentation</a>
       </nav>
 
 
@@ -114,13 +119,13 @@
 
 <div role="navigation" aria-label="breadcrumbs navigation">
   <ul class="wy-breadcrumbs">
-    <li><a href="#">Docs</a> &raquo;</li>
+    <li><a href="index.html">Docs</a> &raquo;</li>
       
-    <li>xtls: awesome tools by xlzd</li>
+    <li>基础帮助方法</li>
       <li class="wy-breadcrumbs-aside">
         
           
-            <a href="_sources/index.txt" rel="nofollow"> View page source</a>
+            <a href="_sources/util.txt" rel="nofollow"> View page source</a>
           
         
       </li>
@@ -130,41 +135,24 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
             
-  <div class="section" id="xtls-awesome-tools-by-xlzd">
-<h1>xtls: awesome tools by xlzd<a class="headerlink" href="#xtls-awesome-tools-by-xlzd" title="永久链接至标题">¶</a></h1>
-<div class="section" id="id1">
-<h2>作者<a class="headerlink" href="#id1" title="永久链接至标题">¶</a></h2>
-<p><a class="reference external" href="http://xlzd.me">点击这里</a> 去作者博客</p>
+  <div class="section" id="util">
+<span id="id1"></span><h1>基础帮助方法<a class="headerlink" href="#util" title="永久链接至标题">¶</a></h1>
+<div class="section" id="beautifulsoup">
+<span id="id2"></span><h2>BeautifulSoup<a class="headerlink" href="#beautifulsoup" title="永久链接至标题">¶</a></h2>
+<p>通过 <code class="docutils literal"><span class="pre">from</span> <span class="pre">bs4</span> <span class="pre">import</span> <span class="pre">BeautifulSoup</span></code> ，在使用的时候需要制定一个html parser，否则会报一个worning，现在可以通过 <code class="docutils literal"><span class="pre">from</span> <span class="pre">xtls.util</span> <span class="pre">import</span> <span class="pre">BeautifulSoup</span></code> 解决。</p>
 </div>
-<div class="section" id="id3">
-<h2>目录<a class="headerlink" href="#id3" title="永久链接至标题">¶</a></h2>
-<div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="overview.html">概览</a></li>
-<li class="toctree-l1"><a class="reference internal" href="timeparser.html">时间解析相关</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="timeparser.html#parse-time-str">解析时间字符串</a></li>
-<li class="toctree-l2"><a class="reference internal" href="timeparser.html#parse-time-exp">解析时间表达式</a></li>
-<li class="toctree-l2"><a class="reference internal" href="timeparser.html#get-time">获取此刻时间</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="codehelper.html">代码检测及帮助</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="codehelper.html#timeit">测试函数运行时长</a></li>
-<li class="toctree-l2"><a class="reference internal" href="codehelper.html#no-exception">控制函数不抛出异常</a></li>
-<li class="toctree-l2"><a class="reference internal" href="codehelper.html#runtime">获取程序运行环境相关</a></li>
-<li class="toctree-l2"><a class="reference internal" href="codehelper.html#singleton">单例装饰器</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="logger.html">日志工具</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="logger.html#logging">Logger</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="util.html">基础帮助方法</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="util.html#beautifulsoup">BeautifulSoup</a></li>
-<li class="toctree-l2"><a class="reference internal" href="util.html#url">Url编码、解码</a></li>
-<li class="toctree-l2"><a class="reference internal" href="util.html#digest">数据摘要</a></li>
-</ul>
-</li>
-</ul>
+<div class="section" id="url">
+<span id="id3"></span><h2>Url编码、解码<a class="headerlink" href="#url" title="永久链接至标题">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xtls.util</span> <span class="kn">import</span> <span class="n">url_encode</span><span class="p">,</span> <span class="n">url_decode</span>
+<span class="n">url_encode</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
+<span class="n">url_decode</span><span class="p">(</span><span class="n">string</span><span class="p">,</span> <span class="n">encoding</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="digest">
+<span id="id4"></span><h2>数据摘要<a class="headerlink" href="#digest" title="永久链接至标题">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xtls.util</span> <span class="kn">import</span> <span class="n">md5</span><span class="p">,</span> <span class="n">sha1</span><span class="p">,</span> <span class="n">sha224</span><span class="p">,</span> <span class="n">sha256</span><span class="p">,</span> <span class="n">sha384</span><span class="p">,</span> <span class="n">sha512</span>
+</pre></div>
 </div>
 </div>
 </div>
@@ -176,8 +164,8 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="overview.html" class="btn btn-neutral float-right" title="概览" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
       
+        <a href="logger.html" class="btn btn-neutral" title="日志工具" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

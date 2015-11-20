@@ -1,0 +1,38 @@
+.. _util:
+
+基础帮助方法
+===========
+
+.. _BeautifulSoup:
+
+BeautifulSoup
+----------
+
+通过 ``from bs4 import BeautifulSoup`` ，在使用的时候需要制定一个html parser，否则会报一个worning，现在可以通过 ``from xtls.util import BeautifulSoup`` 解决。
+
+
+.. _url:
+
+Url编码、解码
+----------
+
+::
+
+    from xtls.util import url_encode, url_decode
+    url_encode(string, encoding)
+    url_decode(string, encoding)
+
+ 
+
+.. _digest:
+
+数据摘要
+----------
+
+::
+
+    from xtls.util import md5, sha1, sha224, sha256, sha384, sha512
+    
+
+
+

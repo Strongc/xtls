@@ -1,0 +1,239 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>时间解析相关 &mdash; xtls documentation 0.0.* 文档</title>
+  
+
+  
+  
+
+  
+
+  
+  
+    
+
+  
+
+  
+  
+    <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  
+
+  
+
+  
+    <link rel="top" title="xtls documentation 0.0.* 文档" href="index.html"/>
+        <link rel="next" title="代码检测及帮助" href="codehelper.html"/>
+        <link rel="prev" title="概览" href="overview.html"/> 
+
+  
+  <script src="_static/js/modernizr.min.js"></script>
+
+</head>
+
+<body class="wy-body-for-nav" role="document">
+
+  <div class="wy-grid-for-nav">
+
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          
+
+          
+            <a href="index.html" class="icon icon-home"> xtls documentation
+          
+
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                0.0.*
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+                <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="overview.html">概览</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="">时间解析相关</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#parse-time-str">解析时间字符串</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#parse-time-exp">解析时间表达式</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#get-time">获取此刻时间</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="codehelper.html">代码检测及帮助</a></li>
+<li class="toctree-l1"><a class="reference internal" href="logger.html">日志工具</a></li>
+<li class="toctree-l1"><a class="reference internal" href="util.html">基础帮助方法</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" role="navigation" aria-label="top navigation">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="index.html">xtls documentation</a>
+      </nav>
+
+
+      
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+  <ul class="wy-breadcrumbs">
+    <li><a href="index.html">Docs</a> &raquo;</li>
+      
+    <li>时间解析相关</li>
+      <li class="wy-breadcrumbs-aside">
+        
+          
+            <a href="_sources/timeparser.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="timeparser">
+<span id="id1"></span><h1>时间解析相关<a class="headerlink" href="#timeparser" title="永久链接至标题">¶</a></h1>
+<div class="section" id="parse-time-str">
+<span id="id2"></span><h2>解析时间字符串<a class="headerlink" href="#parse-time-str" title="永久链接至标题">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xtls.timeparser</span> <span class="kn">import</span> <span class="n">parse_time</span>
+
+<span class="n">parse_time</span><span class="p">(</span><span class="s">&#39;现在是2012-10-02 02:01:01&#39;</span><span class="p">)</span>  <span class="c"># 2012-10-02 02:01:01</span>
+<span class="n">parse_time</span><span class="p">(</span><span class="s">&#39;现在是2012-10-02&#39;</span><span class="p">)</span>  <span class="c"># 2012-10-02 00:00:00</span>
+<span class="n">parse_time</span><span class="p">(</span><span class="s">&#39;现在是2012年12月12日9时21分31秒&#39;</span><span class="p">)</span>  <span class="c"># 2012-12-12 09:21:31</span>
+<span class="n">parse_time</span><span class="p">(</span><span class="s">&#39;现在是二〇一五年十二月二十五日&#39;</span><span class="p">)</span>  <span class="c"># 2015-12-25 00:00:00</span>
+<span class="n">parse_time</span><span class="p">(</span><span class="s">&#39;20120310&#39;</span><span class="p">)</span>  <span class="c"># 2012-03-10 00:00:00</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="parse-time-exp">
+<span id="id3"></span><h2>解析时间表达式<a class="headerlink" href="#parse-time-exp" title="永久链接至标题">¶</a></h2>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">from</span> <span class="nn">xtls.timeparser</span> <span class="kn">import</span> <span class="n">parse_time</span>
+
+<span class="n">parse_time</span><span class="p">(</span><span class="s">&#39;3天后&#39;</span><span class="p">)</span>  <span class="c"># 距离此刻三天后</span>
+
+<span class="c"># 支持的时间表达式：2年前，9天后，3个季度之后，23分钟前....</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="get-time">
+<span id="id4"></span><h2>获取此刻时间<a class="headerlink" href="#get-time" title="永久链接至标题">¶</a></h2>
+<p><code class="docutils literal"><span class="pre">from</span> <span class="pre">xtls.timeparser</span> <span class="pre">import</span> <span class="pre">now</span></code></p>
+<p>支持返回Utc时间或者本地时间，可指定返回时间对象或者字符串。</p>
+</div>
+</div>
+
+
+           </div>
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="codehelper.html" class="btn btn-neutral float-right" title="代码检测及帮助" accesskey="n">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="overview.html" class="btn btn-neutral" title="概览" accesskey="p"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; 版权所有 2015, xlzd.
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/snide/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  
+
+    <script type="text/javascript">
+        var DOCUMENTATION_OPTIONS = {
+            URL_ROOT:'./',
+            VERSION:'0.0.*',
+            COLLAPSE_INDEX:false,
+            FILE_SUFFIX:'.html',
+            HAS_SOURCE:  true
+        };
+    </script>
+      <script type="text/javascript" src="_static/jquery.js"></script>
+      <script type="text/javascript" src="_static/underscore.js"></script>
+      <script type="text/javascript" src="_static/doctools.js"></script>
+      <script type="text/javascript" src="_static/translations.js"></script>
+
+  
+
+  
+  
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+  
+
+  
+  
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.StickyNav.enable();
+      });
+  </script>
+   
+
+</body>
+</html>

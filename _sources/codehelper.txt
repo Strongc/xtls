@@ -1,0 +1,75 @@
+.. _codehelper:
+
+代码检测及帮助
+===========
+
+.. _timeit:
+
+测试函数运行时长
+----------
+
+检测一个函数的运行时间，支持使用logger记录到日志中
+::
+
+    from xtls.codehelper import timeit
+    
+    @timeit  # or @timeit(logger)
+    def func():
+        print 'hello'
+    
+    >> output:
+    function [func] start at [2015-11-03 15:04:49]
+    function [func] exit  at [2015-11-03 15:04:49]
+    function [func] coast [0.0350475311279ms]
+    
+    
+
+.. _no_exception:
+
+控制函数不抛出异常
+----------
+
+有时候不希望代码在某一句停下，但每句代码 try-catch 又很难看，可以使用 @no_exception 控制函数在遇到异常时返回某默认值。
+
+::
+
+    from xtls.codehelper import no_exception
+    
+    @no_exceptiin(on_exception="return what when exception")
+    def func():
+        pass
+     
+
+.. _runtime:
+
+获取程序运行环境相关
+----------
+
+有时候程序会运行在本机/服务器/测试环境等等，如果配置邮件预警不容易知道来自哪个机器，可通过如下方法获取：
+
+::
+
+    from xtls.codehelper import get_user, get_ip, get_runner
+    
+    get_user()    # xlzd
+    get_ip()      # 192.168.1.100
+    get_runner()  # xlzd@192.168.1.100
+     
+
+
+.. _singleton:
+
+单例装饰器
+----------
+
+装饰在类定义的地方，使某个类只能创建一个实例。
+
+::
+
+    from xtls.codehelper import singleton
+    
+    @singleton
+    class Demo(object):
+        pass
+    
+
