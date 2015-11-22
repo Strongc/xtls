@@ -16,7 +16,7 @@ __packages__ = [
     'timeparser',
     'util',
     'logger',
-    'activemqwraps',
+    'mqwrapper',
     'errors',
     'cassandrautil',
 ]
