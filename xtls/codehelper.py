@@ -101,7 +101,13 @@ def get_ip():
     try:
         return socket.inet_ntoa(fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s', 'eth1'))[20:24])
     except Exception, e:
-        return socket.inet_ntoa(fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s', 'eth0'))[20:24])
+        try:
+            return socket.inet_ntoa(fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s', 'wlan0'))[20:24])
+        except Exception, e:
+            try:
+                return socket.inet_ntoa(fcntl.ioctl(s.fileno(), 0x8915, struct.pack('256s', 'eth0'))[20:24])
+            except Exception, e:
+                return socket.gethostbyname(socket.getfqdn(socket.gethostname()))
 
 
 def get_runner():
@@ -122,3 +128,7 @@ def singleton(cls):
             INSTANCES[cls] = cls(*args, **kwargs)
         return INSTANCES[cls]
     return _singleton
+
+
+if __name__ == '__main__':
+    print get_ip()
