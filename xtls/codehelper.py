@@ -38,7 +38,7 @@ def timeit(argument):
     """
     if hasattr(argument, 'info'):
         def decorator(function):
-            @wraps
+            @wraps(function)
             def wrapper(*args, **kwargs):
                 start_time = time.time()
                 argument.info('function [%s] start at [%s]' % (function.__name__, now(obj=False, precise=True)))
@@ -49,7 +49,7 @@ def timeit(argument):
             return wrapper
         return decorator
     if callable(argument):
-        @wraps
+        @wraps(argument)
         def wrapper(*args, **kwargs):
             start_time = time.time()
             print 'function [%s] start at [%s]' % (argument.__name__, now(obj=False, precise=True))
