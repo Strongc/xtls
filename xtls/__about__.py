@@ -31,7 +31,7 @@ __requires__ = [
 __version__ = '0.0.15'
 
 __name__ = 'xtls'
-__summary__ = 'xtls: tools just for xlzd'
+__summary__ = 'xtls: tools by xlzd'
 __author__ = 'xlzd'
 __email__ = 'i@xlzd.me'
 __url__ = 'https://github.com/xlzd/xtls'
