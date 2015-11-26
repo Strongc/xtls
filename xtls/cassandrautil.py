@@ -28,7 +28,6 @@ class CassandraProxy(object):
         return ("%s", "'%s'")[isinstance(value, basestring)] % value
 
     def _run(self, keyspace, cql):
-        print cql
         return self._get_session(keyspace).execute(query=cql)
 
     def select(self, keyspace, table, select_items=None, filter_dict=None, limit=None):
