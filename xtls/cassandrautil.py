@@ -23,9 +23,12 @@ class CassandraProxy(object):
         return self._sessions[keyspace]
 
     def _build(self, value):
+        if isinstance(value, list):
+            return '({items})'.format(items=','.join([self._build(i) for i in value]))
         return ("%s", "'%s'")[isinstance(value, basestring)] % value
 
     def _run(self, keyspace, cql):
+        print cql
         return self._get_session(keyspace).execute(query=cql)
 
     def select(self, keyspace, table, select_items=None, filter_dict=None, limit=None):
@@ -42,7 +45,7 @@ class CassandraProxy(object):
             raise ValueError('select items must be a list, got %s' % type(select_items))
         cql = 'SELECT %s FROM %s' % (','.join(select_items), table)
         if isinstance(filter_dict, dict) and filter_dict:
-            cql += ' WHERE ' + ' and '.join(['%s=%s' % (k, self._build(v)) for (k, v) in filter_dict.iteritems()])
+            cql += ' WHERE ' + ' and '.join(['{k}%s{v}'.format(k=k, v=self._build(v)) % ('=', ' in ')[isinstance(v, list)] for (k,v) in filter_dict.iteritems()])
         if isinstance(limit, int):
             cql = cql + ' LIMIT %d' % limit
         return self._run(keyspace, cql)
@@ -75,3 +78,12 @@ class CassandraProxy(object):
         condition = ' and '.join('%s=%s' % (k, self._build(v)) for (k, v) in condition.iteritems())
         cql = "DELETE from {table} WHERE {condition}".format(table=table, condition=condition)
         return self._run(keyspace, cql)
+
+
+if __name__ == '__main__':
+    CASSANDRA = CassandraProxy(['192.168.31.48'])
+    # x = CASSANDRA._get_session('crawler')
+    # for xx in x.execute(query="SELECT * FROM news_by_key WHERE period in (201511,201111) and key='杭州誉存科技有限公司'"):
+    #     print xx
+    for xx in CASSANDRA.select('crawler', 'news_by_key', filter_dict={'key': u'杭州誉存科技有限公司', 'period': [201511, 201111]}):
+        print xx
