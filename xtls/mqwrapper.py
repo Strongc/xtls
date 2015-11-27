@@ -34,7 +34,7 @@ def _conn(cfg_uri, queue, _info):
     return client
 
 
-def consumer(cfg_uri, queue, param_type=str, logger=None):
+def consumer(cfg_uri, queue, param_type=None, logger=None):
     """
     分布式爬虫的爬虫端（具体爬虫部分）
     被包装的函数必须满足如下要求：
@@ -43,7 +43,7 @@ def consumer(cfg_uri, queue, param_type=str, logger=None):
 
     :param cfg_uri: 读取任务的路径
     :param queue: Queue的名字
-    :param param_type: 所包装的函数接受的参数类型
+    :param param_type: 所包装的函数接受的参数类型, None为任意类型
     :param logger: 日志记录工具
     """
     from stompest.protocol import StompSpec
@@ -61,7 +61,8 @@ def consumer(cfg_uri, queue, param_type=str, logger=None):
                     frame = client.receiveFrame()
                     _info('got new frame %s' % frame)
                     param = loads(frame.body)
-                    assert isinstance(param, param_type)
+                    if param_type:
+                        assert isinstance(param, param_type)
                     code, msg = function(param)
                     _info('result of task [%s]: [%s]-[%s]' % (frame.body, code, msg))
                 except (KeyboardInterrupt, AssertionError, ConsumerFatalError), e:
