@@ -4,6 +4,11 @@ import re
 import sys
 from pprint import pprint
 from functools import wraps
+try:
+    from cPickle import dumps, loads
+except ImportError:
+    from pickle import dumps, loads
+
 from errors import ConsumerFatalError, ProducerFatalError
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -55,10 +60,8 @@ def consumer(cfg_uri, queue, param_type=str, logger=None):
                 try:
                     frame = client.receiveFrame()
                     _info('got new frame %s' % frame)
-                    param = frame.body
-                    if param_type not in [basestring, str, unicode]:
-                        param = eval(param)
-                        assert isinstance(param, param_type)
+                    param = loads(frame.body)
+                    assert isinstance(param, param_type)
                     code, msg = function(param)
                     _info('result of task [%s]: [%s]-[%s]' % (frame.body, code, msg))
                 except (KeyboardInterrupt, AssertionError, ConsumerFatalError), e:
@@ -97,9 +100,9 @@ def producer(cfg_uri, queue, logger=None):
             client = _conn(cfg_uri, queue, _info)
             for item in function(*args, **kwargs):
                 try:
-                    item = repr(item)
-                    client.send(queue, item, headers={'persistent': 'true'})
-                    _info('Producer %s - %s' % (queue, item))
+                    data = dumps(item)
+                    client.send(queue, data, headers={'persistent': 'true'})
+                    _info('Producer insert %s - %s' % (queue, item))
                 except ProducerFatalError, e:
                     _exception(e)
                     break
