@@ -31,5 +31,4 @@ def colorful_print(string, color):
 
 if __name__ == '__main__':
     print dyeing('呵呵', Color.YELLOW)
-    print dyeing(u'呵呵', Color.YELLOW)
     colorful_print('what', Color.RED)
