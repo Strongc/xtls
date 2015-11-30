@@ -59,11 +59,11 @@ class CassandraProxy(object):
             raise ValueError('data must be a dict, got %s' % type(data))
         if not filter:
             filter = lambda _: True
-        data = [(k, v) for k, v in data.iteritems() if filter(k)]
-        fields = ', '.join((item[0] for item in data))
-        values = ', '.join((self._build(item[1]) for item in data))
+        keys = [key for key in data.keys() if filter(key)]
+        fields = ', '.join(keys)
+        values = ', '.join(['%%(%s)s' % k for k in keys])
         cql = 'INSERT INTO {table} ({fields}) VALUES ({values})'.format(table=table, fields=fields, values=values)
-        self._run(keyspace, cql)
+        self._get_session(keyspace).execute(cql, data)
 
     def delete(self, keyspace, table, condition):
         """
