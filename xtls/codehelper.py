@@ -7,10 +7,12 @@ import getpass
 import socket
 import fcntl
 import struct
+import signal
 import traceback
 from functools import wraps
 
 from timeparser import now
+from errors import TimeoutError
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -18,6 +20,7 @@ sys.setdefaultencoding("utf-8")
 __all__ = [
     'timeit',
     'no_exception',
+    'timeout',
     'get_user',
     'get_ip',
     'get_runner',
@@ -76,6 +79,29 @@ def no_exception(on_exception, logger=None):
                 else:
                     print traceback.format_exc()
                 result = on_exception
+            return result
+        return wrapper
+    return decorator
+
+
+def timeout(seconds, err_msg="xtls: function run too long."):
+    """
+    超时检测
+    :param seconds: 函数最长运行时间
+    :param err_msg: 超时提示
+    """
+    def decorator(function):
+        def _on_timeout(signum, frame):
+            raise TimeoutError(err_msg)
+
+        @wraps(function)
+        def wrapper(*args, **kwargs):
+            signal.signal(signal.SIGALRM, _on_timeout)
+            signal.alarm(seconds)
+            try:
+                result = function(*args, **kwargs)
+            finally:
+                signal.alarm(0)
             return result
         return wrapper
     return decorator

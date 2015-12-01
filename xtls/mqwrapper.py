@@ -13,7 +13,13 @@ from errors import ConsumerFatalError, ProducerFatalError
 reload(sys)
 sys.setdefaultencoding("utf-8")
 
+URI_BASE = 'failover:({host})?initialReconnectDelay=1000,randomize=false,startupMaxReconnectAttempts={start},maxReconnectDelay=10000,maxReconnectAttempts={reconn}'
+
 _deal_uri = lambda uri: uri if re.match(ur'tcp://(.+?):(\d+)', uri) else 'tcp://{host}:61613'.format(host=uri)
+
+
+def _build_uri(uri, startup_times=-1, reconnect_times=-1):
+    return URI_BASE.format(host=_deal_uri(uri), start=startup_times, reconn=reconnect_times)
 
 
 def _deal_logger(logger):
@@ -49,13 +55,18 @@ def consumer(cfg_uri, queue, param_type=None, logger=None):
     from stompest.protocol import StompSpec
 
     _info, _exception = _deal_logger(logger)
-    cfg_uri = _deal_uri(cfg_uri)
+    cfg_uri = _build_uri(cfg_uri)
 
     def decorator(function):
-        @wraps(function)
-        def wapper():
+
+        def _build_conn():
             client = _conn(cfg_uri, queue, _info)
             client.subscribe(queue, {StompSpec.ACK_HEADER: StompSpec.ACK_CLIENT_INDIVIDUAL})
+            return client
+
+        @wraps(function)
+        def wapper():
+            client = _build_conn()
             while True:
                 try:
                     frame = client.receiveFrame()
@@ -73,8 +84,10 @@ def consumer(cfg_uri, queue, param_type=None, logger=None):
                 finally:
                     try:
                         client.ack(frame)
-                    except:
-                        pass
+                    except Exception, e:
+                        _exception(e)
+                        client.close()
+                        client = _build_conn()
             client.disconnect()
             _info('disconnected %s' % cfg_uri)
         return wapper

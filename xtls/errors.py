@@ -18,3 +18,10 @@ class ProducerFatalError(Exception):
     当分布式爬虫的任务分配遇到无法后续分配的异常时，抛出这个异常以停止后续的操作
     """
     pass
+
+
+class TimeoutError(Exception):
+    """
+    当@timeout超时时抛出
+    """
+    pass
