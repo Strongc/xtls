@@ -40,7 +40,7 @@ def _conn(cfg_uri, queue, _info):
     return client
 
 
-def consumer(cfg_uri, queue, param_type=None, logger=None):
+def consumer(cfg_uri, queue, param_type=None, logger=None, fetchsize=1):
     """
     分布式爬虫的爬虫端（具体爬虫部分）
     被包装的函数必须满足如下要求：
@@ -51,6 +51,7 @@ def consumer(cfg_uri, queue, param_type=None, logger=None):
     :param queue: Queue的名字
     :param param_type: 所包装的函数接受的参数类型, None为任意类型
     :param logger: 日志记录工具
+    :param fetchsize: 每次取出消息数量
     """
     from stompest.protocol import StompSpec
 
@@ -61,7 +62,10 @@ def consumer(cfg_uri, queue, param_type=None, logger=None):
 
         def _build_conn():
             client = _conn(cfg_uri, queue, _info)
-            client.subscribe(queue, {StompSpec.ACK_HEADER: StompSpec.ACK_CLIENT_INDIVIDUAL})
+            client.subscribe(queue, {
+                StompSpec.ACK_HEADER: StompSpec.ACK_CLIENT_INDIVIDUAL,
+                'activemq.prefetchSize': fetchsize
+            })
             return client
 
         @wraps(function)
