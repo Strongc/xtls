@@ -4,10 +4,12 @@ import re
 import sys
 from pprint import pprint
 from functools import wraps
-try:
-    from cPickle import dumps, loads
-except ImportError:
-    from pickle import dumps, loads
+# try:
+#     from cPickle import dumps, loads
+# except ImportError:
+#     from pickle import dumps, loads
+
+from json import loads, dumps
 
 from errors import ConsumerFatalError, ProducerFatalError
 reload(sys)
@@ -40,16 +42,15 @@ def _conn(cfg_uri, queue, _info):
     return client
 
 
-def consumer(cfg_uri, queue, param_type=None, logger=None, fetchsize=1):
+def consumer(cfg_uri, queue, logger=None, fetchsize=1):
     """
     分布式爬虫的爬虫端（具体爬虫部分）
     被包装的函数必须满足如下要求：
-       1. 有且仅有一个参数（参数类型不限，由param_type指定参数类型）
+       1. 有且仅有一个参数
        2. 对于每个任务，返回两个参数： code, message
 
     :param cfg_uri: 读取任务的路径
     :param queue: Queue的名字
-    :param param_type: 所包装的函数接受的参数类型, None为任意类型
     :param logger: 日志记录工具
     :param fetchsize: 每次取出消息数量
     """
@@ -76,8 +77,6 @@ def consumer(cfg_uri, queue, param_type=None, logger=None, fetchsize=1):
                     frame = client.receiveFrame()
                     _info('got new frame %s' % frame)
                     param = loads(frame.body)
-                    if param_type:
-                        assert isinstance(param, param_type)
                     code, msg = function(param)
                     _info('result of task [%s]: [%s]-[%s]' % (frame.body, code, msg))
                 except (KeyboardInterrupt, AssertionError, ConsumerFatalError), e:
@@ -118,7 +117,9 @@ def producer(cfg_uri, queue, logger=None):
             client = _conn(cfg_uri, queue, _info)
             for item in function(*args, **kwargs):
                 try:
-                    data = dumps(item)
+                    if not isinstance(item, dict):
+                        item = {'data': item}
+                    data = dumps(item, ensure_ascii=False)
                     client.send(queue, data, headers={'persistent': 'true'})
                     _info('Producer insert %s - %s' % (queue, item))
                 except ProducerFatalError, e:
@@ -139,7 +140,7 @@ def _produce(size):
         yield {'key': x}
 
 
-@consumer('192.168.31.116', queue='/queue/test', param_type=str)
+@consumer('192.168.31.116', queue='/queue/test)
 def _task(key):
     print key
     print '-' * 120
