@@ -28,7 +28,7 @@ __requires__ = [
     # 'cassandra-driver',
 ]
 
-__version__ = '0.3.0'
+__version__ = '0.3.1'
 
 __name__ = 'xtls'
 __summary__ = 'xtls: tools by xlzd'
