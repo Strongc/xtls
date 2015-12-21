@@ -10,7 +10,8 @@ __author__ = 'xlzd'
 
 WORD_DICT = {}
 
-with open('letters.data', 'r') as f:
+
+with open(__file__[:__file__.rfind('/')] + '/pinyindata.py', 'r') as f:
     for f_line in f:
         try:
             line = f_line.split('    ')
@@ -30,3 +31,7 @@ def parse(string, only_first=False):
         string = string.decode('utf-8')
 
     return [_parse_letter(char, only_first) for char in string]
+
+
+if __name__ == '__main__':
+    print parse(u'程度')
