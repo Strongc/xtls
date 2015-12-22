@@ -24,7 +24,8 @@ __all__ = [
     'get_user',
     'get_ip',
     'get_runner',
-    'singleton'
+    'singleton',
+    'forever'
 ]
 
 
@@ -154,6 +155,12 @@ def singleton(cls):
             INSTANCES[cls] = cls(*args, **kwargs)
         return INSTANCES[cls]
     return _singleton
+
+
+def forever(start=0):
+    while True:
+        yield start
+        start += 1
 
 
 if __name__ == '__main__':
