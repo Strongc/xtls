@@ -25,10 +25,11 @@ __requires__ = [
     'requests',
     'beautifulsoup4',
     'stompest',
+    'tornado',
     # 'cassandra-driver',
 ]
 
-__version__ = '0.3.6'
+__version__ = '0.4.0'
 
 __name__ = 'xtls'
 __summary__ = 'xtls: tools by xlzd'
