@@ -1,18 +1,19 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
+import fcntl
+import getpass
 import os
+import signal
+import socket
+import struct
 import sys
 import time
-import getpass
-import socket
-import fcntl
-import struct
-import signal
 import traceback
+from contextlib import contextmanager
 from functools import wraps
 
-from timeparser import now
 from errors import TimeoutError
+from timeparser import now
 
 reload(sys)
 sys.setdefaultencoding("utf-8")
@@ -48,9 +49,11 @@ def timeit(argument):
                 argument.info('function [%s] start at [%s]' % (function.__name__, now(obj=False, precise=True)))
                 rst = function(*args, **kwargs)
                 argument.info('function [%s] exit  at [%s]' % (function.__name__, now(obj=False, precise=True)))
-                argument.info('function [%s] coast [%sms]' % (function.__name__, (time.time() - start_time)*1000))
+                argument.info('function [%s] coast [%sms]' % (function.__name__, (time.time() - start_time) * 1000))
                 return rst
+
             return wrapper
+
         return decorator
     if callable(argument):
         @wraps(argument)
@@ -59,8 +62,9 @@ def timeit(argument):
             print 'function [%s] start at [%s]' % (argument.__name__, now(obj=False, precise=True))
             rst = argument(*args, **kwargs)
             print 'function [%s] exit  at [%s]' % (argument.__name__, now(obj=False, precise=True))
-            print 'function [%s] coast [%sms]' % (argument.__name__, (time.time() - start_time)*1000)
+            print 'function [%s] coast [%sms]' % (argument.__name__, (time.time() - start_time) * 1000)
             return rst
+
         return wrapper
     raise ValueError('argument error.')
 
@@ -70,6 +74,7 @@ def no_exception(on_exception, logger=None):
     处理函数抛出异常的装饰器， ATT: on_exception必填
     :param on_exception: 遇到异常时函数返回什么内容
     """
+
     def decorator(function):
         def wrapper(*args, **kwargs):
             try:
@@ -81,7 +86,9 @@ def no_exception(on_exception, logger=None):
                     print traceback.format_exc()
                 result = on_exception
             return result
+
         return wrapper
+
     return decorator
 
 
@@ -91,6 +98,7 @@ def timeout(seconds, err_msg="xtls: function run too long."):
     :param seconds: 函数最长运行时间
     :param err_msg: 超时提示
     """
+
     def decorator(function):
         def _on_timeout(signum, frame):
             raise TimeoutError(err_msg)
@@ -104,7 +112,9 @@ def timeout(seconds, err_msg="xtls: function run too long."):
             finally:
                 signal.alarm(0)
             return result
+
         return wrapper
+
     return decorator
 
 
@@ -154,6 +164,7 @@ def singleton(cls):
         if cls not in INSTANCES:
             INSTANCES[cls] = cls(*args, **kwargs)
         return INSTANCES[cls]
+
     return _singleton
 
 
@@ -163,5 +174,18 @@ def forever(start=0):
         start += 1
 
 
+@contextmanager
+def trytry(logger=None):
+    try:
+        yield
+    except Exception, e:
+        if hasattr(logger, 'exception'):
+            logger.exception(e)
+        else:
+            print traceback.format_exc()
+
+
 if __name__ == '__main__':
-    print get_ip()
+    with trytry():
+        raise Exception('test')
+    print 'yes'
