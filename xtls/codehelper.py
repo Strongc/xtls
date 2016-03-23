@@ -185,7 +185,17 @@ def trytry(logger=None):
             print traceback.format_exc()
 
 
+@contextmanager
+def timetime(tag=None, logger=None):
+    start_time = time.time()
+    yield
+    msg = u'{} coast [{}ms]'.format((tag, '')[tag is None], (time.time() - start_time) * 1000).strip()
+    if hasattr(logger, 'info'):
+        logger.info(msg)
+    else:
+        print msg
+
+
 if __name__ == '__main__':
-    with trytry():
-        raise Exception('test')
-    print 'yes'
+    with timetime(tag='Test'):
+        time.sleep(1)
