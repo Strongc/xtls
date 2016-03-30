@@ -168,10 +168,10 @@ def singleton(cls):
     return _singleton
 
 
-def forever(start=0):
+def forever(start=0, step=1):
     while True:
         yield start
-        start += 1
+        start += step
 
 
 @contextmanager
