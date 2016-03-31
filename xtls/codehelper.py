@@ -1,9 +1,15 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-import fcntl
+try:
+    import fcntl
+except:
+    pass
 import getpass
 import os
-import signal
+try:
+    import signal
+except:
+    pass
 import socket
 import struct
 import sys
